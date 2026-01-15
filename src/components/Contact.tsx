@@ -196,19 +196,19 @@ export const Contact: React.FC = () => {
             </li>
             <li className="flex justify-between border-b border-zinc-100 pb-2">
               <span className="text-zinc-600">💼 LinkedIn</span>
-              <a href="https://linkedin.com/in/shahzaibzakori" target="_blank" rel="noopener noreferrer" className="text-blue-700 underline">shahzaibzakori</a>
+              <a href="https://linkedin.com/in/shahzaib-zakori-59069128b" target="_blank" rel="noopener noreferrer" className="text-blue-700 underline">shahzaibzakori</a>
             </li>
             <li className="flex justify-between border-b border-zinc-100 pb-2">
               <span className="text-zinc-600">📷 Instagram</span>
-              <a href="https://instagram.com/shahzaibzakori" target="_blank" rel="noopener noreferrer" className="text-blue-700 underline">@shahzaibzakori</a>
+              <a href="https://instagram.com/shahzaib_zakori" target="_blank" rel="noopener noreferrer" className="text-blue-700 underline">@shahzaibzakori</a>
             </li>
             <li className="flex justify-between border-b border-zinc-100 pb-2">
               <span className="text-zinc-600">🎵 TikTok</span>
-              <a href="https://tiktok.com/@shahzaibzakori" target="_blank" rel="noopener noreferrer" className="text-blue-700 underline">@shahzaibzakori</a>
+              <a href="https://tiktok.com/@shahzaib.zakori" target="_blank" rel="noopener noreferrer" className="text-blue-700 underline">@shahzaibzakori</a>
             </li>
             <li className="flex justify-between border-b border-zinc-100 pb-2">
               <span className="text-zinc-600">🧵 Threads</span>
-              <a href="https://threads.net/@shahzaibzakori" target="_blank" rel="noopener noreferrer" className="text-blue-700 underline">@shahzaibzakori</a>
+              <a href="https://threads.net/@shahzaib_zakori" target="_blank" rel="noopener noreferrer" className="text-blue-700 underline">@shahzaibzakori</a>
             </li>
             <li className="flex justify-between pb-2">
               <span className="text-zinc-600">📺 YouTube</span>

@@ -643,10 +643,10 @@ const App: React.FC = () => {
         <div className="flex items-center gap-1 mr-2">
           <a href="https://github.com/shahzaibZakori" target="_blank" rel="noopener noreferrer" className="win95-button p-1 text-sm">🐙</a>
           <a href="https://youtube.com/@shahzaibzakori" target="_blank" rel="noopener noreferrer" className="win95-button p-1 text-sm">📺</a>
-          <a href="https://instagram.com/shahzaibzakori" target="_blank" rel="noopener noreferrer" className="win95-button p-1 text-sm">📷</a>
-          <a href="https://linkedin.com/in/shahzaibzakori" target="_blank" rel="noopener noreferrer" className="win95-button p-1 text-sm">💼</a>
-          <a href="https://threads.net/@shahzaibzakori" target="_blank" rel="noopener noreferrer" className="win95-button p-1 text-sm">🧵</a>
-          <a href="https://tiktok.com/@shahzaibzakori" target="_blank" rel="noopener noreferrer" className="win95-button p-1 text-sm">🎵</a>
+          <a href="https://instagram.com/shahzaib_zakori" target="_blank" rel="noopener noreferrer" className="win95-button p-1 text-sm">📷</a>
+          <a href="https://linkedin.com/in/shahzaib-zakori-59069128b" target="_blank" rel="noopener noreferrer" className="win95-button p-1 text-sm">💼</a>
+          <a href="https://threads.net/@shahzaib_zakori" target="_blank" rel="noopener noreferrer" className="win95-button p-1 text-sm">🧵</a>
+          <a href="https://tiktok.com/@shahzaib.zakori" target="_blank" rel="noopener noreferrer" className="win95-button p-1 text-sm">🎵</a>
         </div>
         <div className="win95-inset px-2 h-full flex items-center text-[10px] gap-2 bg-[#c0c0c0] min-w-25 justify-center text-black">
           <span>🔊</span>

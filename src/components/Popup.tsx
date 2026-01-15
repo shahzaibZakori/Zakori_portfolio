@@ -10,8 +10,8 @@ interface PopupProps {
 
 export const Popup: React.FC<PopupProps> = ({ title, onClose, children, buttons }) => {
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-[100] bg-black/20 pointer-events-none">
-      <div className="win95-border w-[350px] shadow-2xl pointer-events-auto">
+    <div className="fixed inset-0 flex items-center justify-center z-100 bg-black/20 pointer-events-none">
+      <div className="win95-border w-350px shadow-2xl pointer-events-auto">
         <div className="title-bar">
           <span>{title}</span>
           <button onClick={onClose} className="win95-button text-[10px] w-4 h-4 p-0">X</button>
