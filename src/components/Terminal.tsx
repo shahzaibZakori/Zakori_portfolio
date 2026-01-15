@@ -33,13 +33,14 @@ export const Terminal: React.FC<TerminalProps> = ({ onClose, onNavigate }) => {
       case 'help':
         response = [
           'AVAILABLE COMMANDS:',
-          '  about    - View professional profile',
-          '  projects - View engineering case studies',
-          '  ls       - List directory contents',
-          '  cat      - View file (e.g., cat bio.txt)',
-          '  clear    - Clear screen',
-          '  whoami   - Current user status',
-          '  exit     - Close terminal window'
+          '  about     - View professional profile',
+          '  projects  - View engineering case studies',
+          '  contact   - View communication protocols',
+          '  ls        - List directory contents',
+          '  cat       - View file (e.g., cat bio.txt)',
+          '  clear     - Clear screen',
+          '  whoami    - Current user status',
+          '  exit      - Close terminal window'
         ];
         break;
       case 'ls':
@@ -55,6 +56,10 @@ export const Terminal: React.FC<TerminalProps> = ({ onClose, onNavigate }) => {
       case 'projects':
         onNavigate(Section.PROJECTS);
         response = ['Opening Projects in Browser...'];
+        break;
+      case 'contact':
+        onNavigate(Section.CONTACT);
+        response = ['Opening Communication Protocols in Browser...'];
         break;
       case 'cat bio.txt':
         response = [
@@ -87,7 +92,7 @@ export const Terminal: React.FC<TerminalProps> = ({ onClose, onNavigate }) => {
       ref={scrollRef}
       onClick={() => document.getElementById('term-input')?.focus()}
     >
-      <div className="flex-grow overflow-y-auto mb-2 text-xs leading-tight">
+      <div className="grow overflow-y-auto mb-2 text-xs leading-tight">
         {history.map((line, i) => (
           <div key={i} className="min-h-[1.2em]">{line}</div>
         ))}

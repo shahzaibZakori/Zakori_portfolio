@@ -84,6 +84,7 @@ const App: React.FC = () => {
     <div className="w-screen h-screen relative overflow-hidden flex flex-col select-none bg-[#3a6ea5]">
       {/* Desktop Space */}
       <main className="grow relative p-4" onClick={() => setIsStartMenuOpen(false)}>
+        
         {/* Desktop Icons */}
         <div className="flex flex-col z-0">
           <div className="desktop-icon" onClick={() => { setIsBrowserOpen(true); setFocusedWindow('browser'); }}>
@@ -94,13 +95,22 @@ const App: React.FC = () => {
             <div className="icon-box">📟</div>
             <span className="text-white">MS-DOS Prompt</span>
           </div>
+          <div className="desktop-icon" onClick={() => navigate(Section.CONTACT)}>
+            <div className="icon-box">📧</div>
+            <span className="text-white">Contact</span>
+          </div>
           <div className="desktop-icon" onClick={() => navigate(Section.FAILURES)}>
             <div className="icon-box">🗑️</div>
             <span className="text-white">Recycle Bin</span>
           </div>
         </div>
 
-        {/* Browser Window */}
+        {/* Centered Name */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
+          <div className="text-white text-6xl font-bold italic animate-pulse" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.5)', fontFamily: 'serif' }}>
+            Shahzaib Zakori
+          </div>
+        </div>
         {isBrowserOpen && (
           <div 
             className={`win95-border absolute flex flex-col shadow-lg transition-all ${focusedWindow === 'browser' ? 'z-50' : 'z-10'}`}
@@ -129,6 +139,15 @@ const App: React.FC = () => {
             <div className="flex gap-1 p-1 border-b border-zinc-400 bg-[#c0c0c0]">
               <button onClick={() => navigate(Section.HOME)} className="win95-button px-4 py-1">
                 🏠 Home
+              </button>
+              <button onClick={() => navigate(Section.ABOUT)} className="win95-button px-4 py-1">
+                👤 About
+              </button>
+              <button onClick={() => navigate(Section.PROJECTS)} className="win95-button px-4 py-1">
+                🏗️ Projects
+              </button>
+              <button onClick={() => navigate(Section.CONTACT)} className="win95-button px-4 py-1">
+                📧 Contact
               </button>
               <div className="w-px h-6 bg-zinc-500 mx-1"></div>
               <div className="win95-inset grow bg-white px-2 py-1 text-xs truncate text-black">
@@ -178,6 +197,7 @@ const App: React.FC = () => {
           <div className="start-menu-items">
             <div className="start-menu-item" onClick={() => navigate(Section.ABOUT)}>👤 Profile Manifest</div>
             <div className="start-menu-item" onClick={() => navigate(Section.PROJECTS)}>🏗️ Deep Architecture</div>
+            <div className="start-menu-item" onClick={() => navigate(Section.CONTACT)}>📧 Communication Protocols</div>
             <div className="start-menu-item" onClick={() => navigate(Section.FAILURES)}>⚠️ Anti-Portfolio</div>
             <div className="h-px bg-zinc-400 my-1 mx-2"></div>
             <div className="start-menu-item" onClick={() => { setIsTerminalOpen(true); setIsStartMenuOpen(false); }}>📟 MS-DOS Prompt</div>
@@ -214,6 +234,15 @@ const App: React.FC = () => {
         )}
 
         <div className="grow"></div>
+        {/* Social Media Icons */}
+        <div className="flex items-center gap-1 mr-2">
+          <a href="https://github.com/shahzaibZakori" target="_blank" rel="noopener noreferrer" className="win95-button p-1 text-sm">🐙</a>
+          <a href="https://youtube.com/@shahzaibzakori" target="_blank" rel="noopener noreferrer" className="win95-button p-1 text-sm">📺</a>
+          <a href="https://instagram.com/shahzaibzakori" target="_blank" rel="noopener noreferrer" className="win95-button p-1 text-sm">📷</a>
+          <a href="https://linkedin.com/in/shahzaibzakori" target="_blank" rel="noopener noreferrer" className="win95-button p-1 text-sm">💼</a>
+          <a href="https://threads.net/@shahzaibzakori" target="_blank" rel="noopener noreferrer" className="win95-button p-1 text-sm">🧵</a>
+          <a href="https://tiktok.com/@shahzaibzakori" target="_blank" rel="noopener noreferrer" className="win95-button p-1 text-sm">🎵</a>
+        </div>
         <div className="win95-inset px-2 h-full flex items-center text-[10px] gap-2 bg-[#c0c0c0] min-w-25 justify-center text-black">
           <span>🔊</span>
           <span className="font-mono text-black">{time}</span>
@@ -244,7 +273,7 @@ const Home: React.FC<{ onNavigate: (s: Section) => void }> = ({ onNavigate }) =>
         </button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="win95-inset p-4 bg-white text-black">
           <h3 className="font-bold text-base mb-2 underline uppercase text-black">Deep_Dive</h3>
           <p className="text-sm text-zinc-600 mb-4">Real-time state synchronization using Socket.IO and Redis logic.</p>
@@ -254,6 +283,11 @@ const Home: React.FC<{ onNavigate: (s: Section) => void }> = ({ onNavigate }) =>
           <h3 className="font-bold text-base mb-2 underline uppercase text-black">Anti_Portfolio</h3>
           <p className="text-sm text-zinc-600 mb-4">A documented record of architectural failures and the lessons extracted.</p>
           <a href="#" onClick={(e) => { e.preventDefault(); onNavigate(Section.FAILURES); }} className="text-xs font-bold text-red-700 underline">View Logs...</a>
+        </div>
+        <div className="win95-inset p-4 bg-white text-black">
+          <h3 className="font-bold text-base mb-2 underline uppercase text-black">Contact</h3>
+          <p className="text-sm text-zinc-600 mb-4">Direct communication channels, email forms, and one-to-one call booking.</p>
+          <a href="#" onClick={(e) => { e.preventDefault(); onNavigate(Section.CONTACT); }} className="text-xs font-bold text-green-700 underline">Get In Touch...</a>
         </div>
       </div>
 
