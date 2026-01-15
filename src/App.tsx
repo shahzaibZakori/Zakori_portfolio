@@ -22,6 +22,13 @@ const App: React.FC = () => {
   const [activeSection, setActiveSection] = useState<Section>(Section.HOME);
   // Defaulting to false so only the Desktop is visible first as requested
   const [isBrowserOpen, setIsBrowserOpen] = useState(false);
+  const [isBrowserMinimized, setIsBrowserMinimized] = useState(false);
+  const [isBrowserMaximized, setIsBrowserMaximized] = useState(false);
+  const [browserPosition, setBrowserPosition] = useState({ top: 20, left: 100 });
+  const [showTooltip, setShowTooltip] = useState<string | null>(null);
+  const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
+  const [browserSize, setBrowserSize] = useState({ width: 'min(900px, 80%)', height: 'min(700px, 85%)' });
+  const [isLoading, setIsLoading] = useState(false);
   const [isTerminalOpen, setIsTerminalOpen] = useState(false);
   const [isStartMenuOpen, setIsStartMenuOpen] = useState(false);
   const [isRebooting, setIsRebooting] = useState(false);
@@ -43,6 +50,10 @@ const App: React.FC = () => {
     // Simulate system shutdown and internal state reset
     setTimeout(() => {
       setIsBrowserOpen(false);
+      setIsBrowserMinimized(false);
+      setIsBrowserMaximized(false);
+      setBrowserPosition({ top: 20, left: 100 });
+      setBrowserSize({ width: 'min(900px, 80%)', height: 'min(700px, 85%)' });
       setIsTerminalOpen(false);
       setActiveSection(Section.HOME);
       setFocusedWindow(null);
@@ -50,11 +61,35 @@ const App: React.FC = () => {
     }, 4000);
   };
 
+  const handleBrowserMinimize = () => {
+    setIsBrowserMinimized(true);
+    setFocusedWindow(null);
+  };
+
+  const handleBrowserMaximize = () => {
+    if (isBrowserMaximized) {
+      // Restore to normal size
+      setIsBrowserMaximized(false);
+      setBrowserPosition({ top: 20, left: 100 });
+      setBrowserSize({ width: 'min(900px, 80%)', height: 'min(700px, 85%)' });
+    } else {
+      // Maximize
+      setIsBrowserMaximized(true);
+      setBrowserPosition({ top: 0, left: 0 });
+      setBrowserSize({ width: '100vw', height: 'calc(100vh - 28px)' });
+    }
+  };
+
   const navigate = (section: Section) => {
-    setActiveSection(section);
-    setIsBrowserOpen(true);
-    setFocusedWindow('browser');
-    setIsStartMenuOpen(false);
+    setIsLoading(true);
+    setTimeout(() => {
+      setActiveSection(section);
+      setIsBrowserOpen(true);
+      setIsBrowserMinimized(false);
+      setFocusedWindow('browser');
+      setIsStartMenuOpen(false);
+      setIsLoading(false);
+    }, 800); // Simulate loading time
   };
 
   if (isRebooting) {
@@ -87,23 +122,80 @@ const App: React.FC = () => {
         
         {/* Desktop Icons */}
         <div className="flex flex-col z-0">
-          <div className="desktop-icon" onClick={() => { setIsBrowserOpen(true); setFocusedWindow('browser'); }}>
+          <div 
+            className="desktop-icon" 
+            onClick={() => { setIsBrowserOpen(true); setFocusedWindow('browser'); }}
+            onMouseEnter={(e) => {
+              setShowTooltip('Netscape Navigator 4.0 - The World Wide Web');
+              setTooltipPosition({ x: e.clientX + 10, y: e.clientY + 10 });
+            }}
+            onMouseLeave={() => setShowTooltip(null)}
+          >
             <div className="icon-box">🌐</div>
             <span className="text-white">Netscape Navigator</span>
           </div>
-          <div className="desktop-icon" onClick={() => { setIsTerminalOpen(true); setFocusedWindow('terminal'); }}>
+          <div 
+            className="desktop-icon" 
+            onClick={() => { setIsTerminalOpen(true); setFocusedWindow('terminal'); }}
+            onMouseEnter={(e) => {
+              setShowTooltip('MS-DOS Prompt - Command Line Interface');
+              setTooltipPosition({ x: e.clientX + 10, y: e.clientY + 10 });
+            }}
+            onMouseLeave={() => setShowTooltip(null)}
+          >
             <div className="icon-box">📟</div>
             <span className="text-white">MS-DOS Prompt</span>
           </div>
-          <div className="desktop-icon" onClick={() => navigate(Section.CONTACT)}>
+          <div 
+            className="desktop-icon" 
+            onClick={() => navigate(Section.CONTACT)}
+            onMouseEnter={(e) => {
+              setShowTooltip('Contact Information and Communication');
+              setTooltipPosition({ x: e.clientX + 10, y: e.clientY + 10 });
+            }}
+            onMouseLeave={() => setShowTooltip(null)}
+          >
             <div className="icon-box">📧</div>
             <span className="text-white">Contact</span>
           </div>
-          <div className="desktop-icon" onClick={() => navigate(Section.FAILURES)}>
+          <div 
+            className="desktop-icon" 
+            onClick={() => navigate(Section.FAILURES)}
+            onMouseEnter={(e) => {
+              setShowTooltip('Recycle Bin - Contains deleted files');
+              setTooltipPosition({ x: e.clientX + 10, y: e.clientY + 10 });
+            }}
+            onMouseLeave={() => setShowTooltip(null)}
+          >
             <div className="icon-box">🗑️</div>
             <span className="text-white">Recycle Bin</span>
           </div>
+          <div 
+            className="desktop-icon" 
+            onDoubleClick={() => navigate(Section.PROJECTS)}
+            onMouseEnter={(e) => {
+              setShowTooltip('My Documents - Double-click to open');
+              setTooltipPosition({ x: e.clientX + 10, y: e.clientY + 10 });
+            }}
+            onMouseLeave={() => setShowTooltip(null)}
+          >
+            <div className="icon-box">📁</div>
+            <span className="text-white">My Documents</span>
+          </div>
         </div>
+
+        {/* Retro Tooltip */}
+        {showTooltip && (
+          <div 
+            className="tooltip"
+            style={{ 
+              left: `${tooltipPosition.x}px`, 
+              top: `${tooltipPosition.y}px` 
+            }}
+          >
+            {showTooltip}
+          </div>
+        )}
 
         {/* Centered Name */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
@@ -111,14 +203,14 @@ const App: React.FC = () => {
             Shahzaib Zakori
           </div>
         </div>
-        {isBrowserOpen && (
+        {isBrowserOpen && !isBrowserMinimized && (
           <div 
             className={`win95-border absolute flex flex-col shadow-lg transition-all ${focusedWindow === 'browser' ? 'z-50' : 'z-10'}`}
             style={{ 
-              top: '20px', 
-              left: '100px', 
-              width: 'min(900px, 80%)', 
-              height: 'min(700px, 85%)',
+              top: `${browserPosition.top}px`, 
+              left: `${browserPosition.left}px`, 
+              width: browserSize.width, 
+              height: browserSize.height,
             }}
             onClick={(e) => { e.stopPropagation(); setFocusedWindow('browser'); }}
           >
@@ -128,9 +220,27 @@ const App: React.FC = () => {
                 <span>Netscape Navigator - [engineer.profile]</span>
               </div>
               <div className="flex gap-1">
-                <button onClick={() => setIsBrowserOpen(false)} className="win95-button w-4 h-4 p-0">_</button>
-                <button className="win95-button w-4 h-4 p-0">□</button>
-                <button onClick={() => setIsBrowserOpen(false)} className="win95-button w-4 h-4 p-0 font-bold">X</button>
+                <button 
+                  onClick={handleBrowserMinimize} 
+                  className="win95-button w-4 h-4 p-0"
+                  title="Minimize"
+                >
+                  _
+                </button>
+                <button 
+                  onClick={handleBrowserMaximize} 
+                  className="win95-button w-4 h-4 p-0"
+                  title={isBrowserMaximized ? "Restore" : "Maximize"}
+                >
+                  {isBrowserMaximized ? '❐' : '□'}
+                </button>
+                <button 
+                  onClick={() => setIsBrowserOpen(false)} 
+                  className="win95-button w-4 h-4 p-0 font-bold"
+                  title="Close"
+                >
+                  X
+                </button>
               </div>
             </div>
             <div className="menu-bar">
@@ -156,13 +266,36 @@ const App: React.FC = () => {
             </div>
             {/* White content area with explicit black text */}
             <div className="grow bg-white win95-inset m-1 overflow-auto p-8 text-black">
-              {activeSection === Section.HOME && <Home onNavigate={navigate} />}
-              {activeSection === Section.ABOUT && <About />}
-              {activeSection === Section.PROJECTS && <DeepDive />}
-              {activeSection === Section.LOGS && <Logs />}
-              {activeSection === Section.FAILURES && <Failures />}
-              {activeSection === Section.ARCHIVE && <Archive />}
-              {activeSection === Section.CONTACT && <Contact />}
+              {isLoading ? (
+                <div className="flex flex-col items-center justify-center h-full">
+                  <div className="text-center">
+                    <div className="text-4xl mb-4">🌐</div>
+                    <div className="text-lg font-bold mb-2">Connecting to engineer-proto.local...</div>
+                    <div className="text-sm text-zinc-600 mb-4">Looking up host...</div>
+                    <div className="flex space-x-1">
+                      <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce"></div>
+                      <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
+                      <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  {activeSection === Section.HOME && <Home onNavigate={navigate} />}
+                  {activeSection === Section.ABOUT && <About />}
+                  {activeSection === Section.PROJECTS && <DeepDive />}
+                  {activeSection === Section.LOGS && <Logs />}
+                  {activeSection === Section.FAILURES && <Failures />}
+                  {activeSection === Section.ARCHIVE && <Archive />}
+                  {activeSection === Section.CONTACT && <Contact />}
+                </>
+              )}
+            </div>
+            {/* Status Bar */}
+            <div className="status-bar">
+              <span className="text-xs">{isLoading ? 'Transferring data from engineer-proto.local...' : 'Document: Done'}</span>
+              <span className="text-xs">Netscape Navigator 4.0</span>
+              <span className="text-xs">{isLoading ? 'Connecting...' : 'SSL: Secure Connection'}</span>
             </div>
           </div>
         )}
@@ -219,7 +352,11 @@ const App: React.FC = () => {
         {isBrowserOpen && (
           <button 
             className={`win95-button flex-1 max-w-40 justify-start px-2 ${focusedWindow === 'browser' ? 'active' : ''}`}
-            onClick={() => { setIsBrowserOpen(true); setFocusedWindow('browser'); }}
+            onClick={() => { 
+              setIsBrowserOpen(true); 
+              setIsBrowserMinimized(false);
+              setFocusedWindow('browser'); 
+            }}
           >
             <span className="mr-2">🌐</span> <span className="truncate text-black">Netscape</span>
           </button>

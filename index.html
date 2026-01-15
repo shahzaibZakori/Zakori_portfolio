@@ -58,6 +58,11 @@
     .win95-button:active, .win95-button.active {
       border-color: var(--win-grey) var(--win-white) var(--win-white) var(--win-grey);
       padding: 3px 7px 1px 9px;
+      background: var(--win-grey);
+    }
+
+    .win95-button:active span, .win95-button.active span {
+      transform: translate(1px, 1px);
     }
 
     .title-bar {
@@ -135,6 +140,7 @@
       transform: rotate(-90deg);
       white-space: nowrap;
       font-size: 14px;
+      margin-bottom: 40px;
     }
 
     .start-menu-items {
@@ -156,6 +162,18 @@
     .start-menu-item:hover {
       background: var(--win-blue);
       color: white;
+    }
+
+    .status-bar {
+      height: 20px;
+      background: var(--win-bg);
+      border-top: 1px solid white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 8px;
+      font-size: 11px;
+      color: black;
     }
 
     a {
@@ -208,6 +226,55 @@
     .terminal-input::selection {
       background: #00ff00;
       color: black;
+    }
+
+    /* Retro cursor styles */
+    .win95-button {
+      cursor: default;
+    }
+
+    .win95-button:hover {
+      cursor: default;
+    }
+
+    .desktop-icon {
+      cursor: default;
+    }
+
+    .desktop-icon:hover {
+      cursor: default;
+    }
+
+    .start-menu-item {
+      cursor: default;
+    }
+
+    .start-menu-item:hover {
+      cursor: default;
+    }
+
+    /* Retro selection styles */
+    ::selection {
+      background: #000080;
+      color: white;
+    }
+
+    ::-moz-selection {
+      background: #000080;
+      color: white;
+    }
+
+    .tooltip {
+      position: fixed;
+      background: #ffffe1;
+      border: 1px solid #000000;
+      padding: 4px 8px;
+      font-size: 11px;
+      color: #000000;
+      white-space: nowrap;
+      z-index: 10000;
+      box-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+      pointer-events: none;
     }
 
   </style>
