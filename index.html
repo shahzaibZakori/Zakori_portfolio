@@ -1,0 +1,207 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Netscape Navigator 4.0</title>
+  <style>
+    :root {
+      --win-bg: #c0c0c0;
+      --win-white: #ffffff;
+      --win-grey: #808080;
+      --win-black: #000000;
+      --win-blue: #000080;
+      --win-blue-light: #1084d0;
+      --link-blue: #0000ee;
+    }
+
+    body {
+      background-color: #3a6ea5; /* Classic Win95 Teal Desktop */
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      font-family: "MS Sans Serif", "Tahoma", "Times New Roman", serif;
+      -webkit-font-smoothing: none;
+      color: var(--win-black); /* Default text color is black */
+    }
+
+    .win95-border {
+      background-color: var(--win-bg);
+      border: 2px solid;
+      border-color: var(--win-white) var(--win-grey) var(--win-grey) var(--win-white);
+    }
+
+    .win95-inset {
+      border: 2px solid;
+      border-color: var(--win-grey) var(--win-white) var(--win-white) var(--win-grey);
+      background-color: white;
+      color: black; /* Force black text in inset areas */
+    }
+
+    .win95-button {
+      background-color: var(--win-bg);
+      border: 2px solid;
+      border-color: var(--win-white) var(--win-grey) var(--win-grey) var(--win-white);
+      padding: 2px 8px;
+      font-size: 11px;
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: black;
+    }
+
+    .win95-button:active, .win95-button.active {
+      border-color: var(--win-grey) var(--win-white) var(--win-white) var(--win-grey);
+      padding: 3px 7px 1px 9px;
+    }
+
+    .title-bar {
+      background: linear-gradient(90deg, var(--win-blue), var(--win-blue-light));
+      color: white; /* Title bar text stays white */
+      padding: 3px 4px;
+      font-weight: bold;
+      font-size: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: default;
+    }
+
+    .title-bar.inactive {
+      background: var(--win-grey);
+    }
+
+    .menu-bar {
+      font-size: 11px;
+      padding: 2px 4px;
+      display: flex;
+      gap: 12px;
+      border-bottom: 1px solid var(--win-grey);
+      color: black;
+    }
+
+    .taskbar {
+      height: 28px;
+      background: var(--win-bg);
+      border-top: 1px solid white;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      padding: 2px;
+      gap: 4px;
+      z-index: 9999;
+      color: black;
+    }
+
+    .start-button {
+      font-weight: bold;
+      font-size: 12px;
+      padding: 2px 6px;
+    }
+
+    .start-menu {
+      position: absolute;
+      bottom: 28px;
+      left: 0;
+      width: 180px;
+      background: var(--win-bg);
+      border: 2px solid;
+      border-color: var(--win-white) var(--win-grey) var(--win-grey) var(--win-white);
+      z-index: 10000;
+      display: flex;
+      color: black;
+    }
+
+    .start-menu-sidebar {
+      width: 24px;
+      background: var(--win-grey);
+      display: flex;
+      align-items: flex-end;
+      padding-bottom: 8px;
+      justify-content: center;
+    }
+
+    .start-menu-text {
+      color: white;
+      font-weight: bold;
+      transform: rotate(-90deg);
+      white-space: nowrap;
+      font-size: 14px;
+    }
+
+    .start-menu-items {
+      flex: 1;
+      padding: 2px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .start-menu-item {
+      padding: 4px 8px;
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    .start-menu-item:hover {
+      background: var(--win-blue);
+      color: white;
+    }
+
+    a {
+      color: var(--link-blue);
+      text-decoration: underline;
+    }
+
+    ::-webkit-scrollbar { width: 16px; }
+    ::-webkit-scrollbar-track { background: #dfdfdf; box-shadow: inset 1px 1px var(--win-grey); }
+    ::-webkit-scrollbar-thumb { background: var(--win-bg); border: 1px solid; border-color: white var(--win-grey) var(--win-grey) white; }
+
+    .desktop-icon {
+      width: 64px;
+      height: 64px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: white;
+      font-size: 10px;
+      text-align: center;
+      user-select: none;
+      margin-bottom: 12px;
+    }
+
+    .desktop-icon:hover .icon-box { background: rgba(0,0,128,0.2); }
+    .desktop-icon .icon-box { font-size: 24px; padding: 4px; border-radius: 2px; }
+    .desktop-icon span { text-shadow: 1px 1px 1px black; padding: 2px; }
+
+  </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@19.0.0",
+    "react-dom": "https://esm.sh/react-dom@19.0.0",
+    "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body>
+  <div id="root"></div>
+<script type="module" src="/src/main.tsx"></script>
+</body>
+</html>
