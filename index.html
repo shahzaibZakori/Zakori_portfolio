@@ -3,7 +3,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>Netscape Navigator 4.0</title>
   <style>
     :root {
@@ -275,6 +278,126 @@
       z-index: 10000;
       box-shadow: 2px 2px 4px rgba(0,0,0,0.3);
       pointer-events: none;
+    }
+
+    /* Mobile Styles */
+    .mobile-app-icon {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      background: #c0c0c0;
+      border: 2px solid;
+      border-color: #ffffff #808080 #808080 #ffffff;
+      cursor: pointer;
+      user-select: none;
+      min-height: 80px;
+    }
+
+    .mobile-app-icon:active {
+      border-color: #808080 #ffffff #ffffff #808080;
+      padding: 17px 15px 15px 17px;
+    }
+
+    .mobile-app-icon .icon-box {
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #ffffff;
+      border: 1px solid #000000;
+      margin-bottom: 4px;
+    }
+
+    .mobile-button {
+      background: #c0c0c0;
+      border: 2px solid;
+      border-color: #ffffff #808080 #808080 #ffffff;
+      padding: 8px 12px;
+      font-size: 12px;
+      cursor: pointer;
+      user-select: none;
+      text-align: center;
+    }
+
+    .mobile-button:active {
+      border-color: #808080 #ffffff #ffffff #808080;
+      padding: 9px 11px 7px 13px;
+    }
+
+    .mobile-nav-button {
+      background: #c0c0c0;
+      border: 1px solid #000000;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .mobile-nav-button:active {
+      background: #808080;
+    }
+
+    .mobile-nav-item {
+      background: #c0c0c0;
+      border: 1px solid #808080;
+      padding: 6px 8px;
+      font-size: 11px;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .mobile-nav-item.active {
+      background: #000080;
+      color: white;
+      border-color: #000080;
+    }
+
+    .mobile-nav-item:active {
+      background: #808080;
+    }
+
+    /* Mobile-specific improvements */
+    @media (max-width: 767px) {
+      .mobile-app-icon {
+        min-height: 70px;
+        padding: 12px;
+      }
+      
+      .mobile-button {
+        min-height: 44px;
+        font-size: 14px;
+      }
+      
+      .mobile-nav-button {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+      }
+      
+      /* Prevent text selection on mobile */
+      .mobile-app-icon,
+      .mobile-button,
+      .mobile-nav-button,
+      .mobile-nav-item {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-touch-callout: none;
+        -webkit-tap-highlight-color: rgba(0,0,0,0.1);
+      }
+      
+      /* Better touch targets */
+      button, .desktop-icon, .start-menu-item {
+        min-height: 44px;
+        min-width: 44px;
+      }
     }
 
   </style>

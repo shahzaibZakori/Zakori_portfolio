@@ -11,7 +11,7 @@ export const About: React.FC = () => {
       <section className="space-y-4">
         <h2 className="text-xl font-bold italic underline text-black">01. Summary_Record</h2>
         <p className="leading-relaxed text-black">
-          I am a <strong>student and self-taught full-stack web developer</strong> with a strong focus on <strong>fundamentals, systems thinking, and real-world constraints</strong>. I intentionally avoid over-engineering and surface-level polish.
+          I am a <strong>student and self-taught full-stack web developer(3 years experience)</strong> with a strong focus on <strong>fundamentals, systems thinking, and real-world constraints</strong>. I intentionally avoid over-engineering and surface-level polish.
         </p>
         <p className="leading-relaxed text-black">
           My journey began with breaking systems and fixing them. Over time, I transitioned from simply "making things work" to understanding <strong>why</strong> systems behave the way they do, specifically around performance, scalability, and structural trade-offs.

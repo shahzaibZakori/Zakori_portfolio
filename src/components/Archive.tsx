@@ -3,12 +3,13 @@ import React from 'react';
 
 export const Archive: React.FC = () => {
   const projects = [
-    { year: '2024', name: 'L-Storage', role: 'Arch Lead', tech: 'C++, NVMe', status: 'PROD' },
-    { year: '2023', name: 'Queue-X', role: 'Dev', tech: 'Go, gRPC', status: 'DEPRECATED' },
-    { year: '2022', name: 'Metric-Viz', role: 'Dev', tech: 'TS, Rust', status: 'ARCHIVED' },
-    { year: '2021', name: 'Legacy-Gate', role: 'Refactor', tech: 'Python, K8s', status: 'PROD' },
-    { year: '2020', name: 'Auth-Core', role: 'Lead', tech: 'Node.js, Redis', status: 'PROD' },
-    { year: '2019', name: 'Old-Blog-v1', role: 'Sole', tech: 'PHP, SQL', status: 'OFFLINE' },
+    { year: '2025', name: 'SDRS', role: 'Frontend Lead', tech: 'ReactTs', status: 'PROD' },
+    { year: '2023', name: 'BOKADRIVER', role: 'Lead', tech: 'Expressjs, Reactjs, Socketio, reddis', status: 'DEPRECATED' },
+    { year: '2025-2026', name: 'Fed-Feed', role: 'Dev', tech: 'Nextjs', status: 'PROD' },
+    { year: '2023', name: 'First Portfolio', role: 'Self', tech: 'Basic', status: 'ARCHIVED' },
+    { year: '2025-2026', name: 'Member Portal', role: 'Lead Dev', tech: '.Net, ReactTs', status: 'PROD' },
+    { year: '2025', name: 'Resumify', role: 'Sole', tech: 'AI SDK, Reactjs', status: 'PROD' },
+    { year: '2026', name: 'Leg_portfolio', role: 'Sole', tech: 'ReactTs', status: 'ONLINE' },
   ];
 
   return (

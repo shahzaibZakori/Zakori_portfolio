@@ -1,7 +1,16 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 export const Contact: React.FC = () => {
+  const [isMobile, setIsMobile] = useState(false);
+  
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const [emailForm, setEmailForm] = useState({
     name: '',
     email: '',
@@ -36,10 +45,10 @@ export const Contact: React.FC = () => {
   };
 
   return (
-    <div className="space-y-8 max-w-2xl text-black">
+    <div className={`space-y-8 text-black ${isMobile ? 'max-w-full p-4' : 'max-w-2xl'}`}>
       <h2 className="font-bold uppercase text-base underline decoration-zinc-700">Communication_Protocols</h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className={`grid gap-6 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2'}`}>
         {/* Direct Email Form */}
         <section>
           <h3 className="text-zinc-500 text-[10px] uppercase mb-2">Direct_Email_Transmission</h3>
@@ -51,8 +60,9 @@ export const Contact: React.FC = () => {
                   type="text"
                   value={emailForm.name}
                   onChange={(e) => setEmailForm({...emailForm, name: e.target.value})}
-                  className="win95-inset w-full p-2 text-xs bg-white"
+                  className={`win95-inset bg-white ${isMobile ? 'p-3 text-base' : 'p-2 text-xs'}`}
                   required
+                  autoComplete="name"
                 />
               </div>
               <div>
@@ -61,8 +71,10 @@ export const Contact: React.FC = () => {
                   type="email"
                   value={emailForm.email}
                   onChange={(e) => setEmailForm({...emailForm, email: e.target.value})}
-                  className="win95-inset w-full p-2 text-xs bg-white"
+                  className={`win95-inset bg-white ${isMobile ? 'p-3 text-base' : 'p-2 text-xs'}`}
                   required
+                  autoComplete="email"
+                  inputMode="email"
                 />
               </div>
               <div>
@@ -71,8 +83,9 @@ export const Contact: React.FC = () => {
                   type="text"
                   value={emailForm.subject}
                   onChange={(e) => setEmailForm({...emailForm, subject: e.target.value})}
-                  className="win95-inset w-full p-2 text-xs bg-white"
+                  className={`win95-inset bg-white ${isMobile ? 'p-3 text-base' : 'p-2 text-xs'}`}
                   required
+                  autoComplete="off"
                 />
               </div>
               <div>
@@ -80,7 +93,7 @@ export const Contact: React.FC = () => {
                 <textarea
                   value={emailForm.message}
                   onChange={(e) => setEmailForm({...emailForm, message: e.target.value})}
-                  className="win95-inset w-full p-2 text-xs bg-white h-20 resize-none"
+                  className={`win95-inset bg-white resize-none ${isMobile ? 'p-3 text-base h-32' : 'p-2 text-xs h-20'}`}
                   required
                 />
               </div>
@@ -102,8 +115,9 @@ export const Contact: React.FC = () => {
                   type="text"
                   value={callForm.name}
                   onChange={(e) => setCallForm({...callForm, name: e.target.value})}
-                  className="win95-inset w-full p-2 text-xs bg-white"
+                  className={`win95-inset bg-white ${isMobile ? 'p-3 text-base' : 'p-2 text-xs'}`}
                   required
+                  autoComplete="name"
                 />
               </div>
               <div>
@@ -112,8 +126,10 @@ export const Contact: React.FC = () => {
                   type="email"
                   value={callForm.email}
                   onChange={(e) => setCallForm({...callForm, email: e.target.value})}
-                  className="win95-inset w-full p-2 text-xs bg-white"
+                  className={`win95-inset bg-white ${isMobile ? 'p-3 text-base' : 'p-2 text-xs'}`}
                   required
+                  autoComplete="email"
+                  inputMode="email"
                 />
               </div>
               <div>
@@ -122,8 +138,9 @@ export const Contact: React.FC = () => {
                   type="tel"
                   value={callForm.phone}
                   onChange={(e) => setCallForm({...callForm, phone: e.target.value})}
-                  className="win95-inset w-full p-2 text-xs bg-white"
-                  placeholder="Optional"
+                  className={`win95-inset bg-white ${isMobile ? 'p-3 text-base' : 'p-2 text-xs'}`}
+                  autoComplete="tel"
+                  inputMode="tel"
                 />
               </div>
               <div>
@@ -131,7 +148,7 @@ export const Contact: React.FC = () => {
                 <select
                   value={callForm.preferredTime}
                   onChange={(e) => setCallForm({...callForm, preferredTime: e.target.value})}
-                  className="win95-inset w-full p-2 text-xs bg-white"
+                  className={`win95-inset bg-white ${isMobile ? 'p-3 text-base' : 'p-2 text-xs'}`}
                   required
                 >
                   <option value="">Select Time</option>
@@ -146,9 +163,10 @@ export const Contact: React.FC = () => {
                   type="text"
                   value={callForm.topic}
                   onChange={(e) => setCallForm({...callForm, topic: e.target.value})}
-                  className="win95-inset w-full p-2 text-xs bg-white"
+                  className={`win95-inset bg-white ${isMobile ? 'p-3 text-base' : 'p-2 text-xs'}`}
                   placeholder="e.g., Technical Architecture, Career Advice"
                   required
+                  autoComplete="off"
                 />
               </div>
               <button type="submit" className="win95-button px-4 py-1 font-bold">

@@ -34,12 +34,25 @@ const App: React.FC = () => {
   const [isRebooting, setIsRebooting] = useState(false);
   const [focusedWindow, setFocusedWindow] = useState<'browser' | 'terminal' | null>(null);
   const [time, setTime] = useState(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
+  const [isMobile, setIsMobile] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
     const timer = setInterval(() => {
       setTime(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
     }, 1000);
-    return () => clearInterval(timer);
+    
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+      clearInterval(timer);
+    };
   }, []);
 
   // Internal restart logic to avoid "File Not Found" browser errors
@@ -81,15 +94,21 @@ const App: React.FC = () => {
   };
 
   const navigate = (section: Section) => {
-    setIsLoading(true);
-    setTimeout(() => {
+    if (isMobile) {
       setActiveSection(section);
       setIsBrowserOpen(true);
-      setIsBrowserMinimized(false);
-      setFocusedWindow('browser');
-      setIsStartMenuOpen(false);
-      setIsLoading(false);
-    }, 800); // Simulate loading time
+      setMobileMenuOpen(false);
+    } else {
+      setIsLoading(true);
+      setTimeout(() => {
+        setActiveSection(section);
+        setIsBrowserOpen(true);
+        setIsBrowserMinimized(false);
+        setFocusedWindow('browser');
+        setIsStartMenuOpen(false);
+        setIsLoading(false);
+      }, 800); // Simulate loading time
+    }
   };
 
   if (isRebooting) {
@@ -115,6 +134,244 @@ const App: React.FC = () => {
     );
   }
 
+  // Mobile Layout - App-like interface
+  if (isMobile) {
+    return (
+      <div className="w-screen h-screen bg-[#3a6ea5] flex flex-col select-none">
+        {/* Mobile Header */}
+        <div className="bg-[#c0c0c0] border-b-2 border-white p-2 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span className="text-lg">📱</span>
+            <span className="font-bold text-sm">ENGINEER_OS</span>
+          </div>
+          <div className="text-xs font-mono">{time}</div>
+        </div>
+
+        {/* Mobile Content Area */}
+        <div className="flex-1 bg-white overflow-auto">
+          {!isBrowserOpen ? (
+            /* Mobile Desktop/Home Screen */
+            <div className="p-4">
+              <div className="text-center mb-6">
+                <h1 className="text-2xl font-bold mb-2">Shahzaib Zakori</h1>
+                <p className="text-sm text-gray-600">Full-Stack Developer</p>
+              </div>
+
+              {/* Mobile App Grid */}
+              <div className="grid grid-cols-3 gap-4 mb-6">
+                <div 
+                  className="mobile-app-icon"
+                  onClick={() => { setIsBrowserOpen(true); setActiveSection(Section.HOME); }}
+                >
+                  <div className="icon-box text-2xl">🌐</div>
+                  <span className="text-xs mt-1">Browser</span>
+                </div>
+                <div 
+                  className="mobile-app-icon"
+                  onClick={() => { setIsTerminalOpen(true); setFocusedWindow('terminal'); }}
+                >
+                  <div className="icon-box text-2xl">📟</div>
+                  <span className="text-xs mt-1">Terminal</span>
+                </div>
+                <div 
+                  className="mobile-app-icon"
+                  onClick={() => { setIsBrowserOpen(true); setActiveSection(Section.CONTACT); }}
+                >
+                  <div className="icon-box text-2xl">📧</div>
+                  <span className="text-xs mt-1">Contact</span>
+                </div>
+                <div 
+                  className="mobile-app-icon"
+                  onClick={() => { setIsBrowserOpen(true); setActiveSection(Section.PROJECTS); }}
+                >
+                  <div className="icon-box text-2xl">🏗️</div>
+                  <span className="text-xs mt-1">Projects</span>
+                </div>
+                <div 
+                  className="mobile-app-icon"
+                  onClick={() => { setIsBrowserOpen(true); setActiveSection(Section.ABOUT); }}
+                >
+                  <div className="icon-box text-2xl">👤</div>
+                  <span className="text-xs mt-1">About</span>
+                </div>
+                <div 
+                  className="mobile-app-icon"
+                  onClick={() => { setIsBrowserOpen(true); setActiveSection(Section.LOGS); }}
+                >
+                  <div className="icon-box text-2xl">📋</div>
+                  <span className="text-xs mt-1">Logs</span>
+                </div>
+                <div 
+                  className="mobile-app-icon"
+                  onClick={() => { setIsBrowserOpen(true); setActiveSection(Section.FAILURES); }}
+                >
+                  <div className="icon-box text-2xl">⚠️</div>
+                  <span className="text-xs mt-1">Failures</span>
+                </div>
+                <div 
+                  className="mobile-app-icon"
+                  onClick={() => { setIsBrowserOpen(true); setActiveSection(Section.ARCHIVE); }}
+                >
+                  <div className="icon-box text-2xl">🗑️</div>
+                  <span className="text-xs mt-1">Archive</span>
+                </div>
+              </div>
+
+              {/* Mobile Quick Actions */}
+              <div className="bg-[#c0c0c0] p-3 rounded border-2 border-white">
+                <h3 className="font-bold text-sm mb-2">Quick Actions</h3>
+                <div className="grid grid-cols-2 gap-2">
+                  <button 
+                    className="mobile-button"
+                    onClick={() => window.open('https://github.com/shahzaibZakori', '_blank')}
+                  >
+                    🐙 GitHub
+                  </button>
+                  <button 
+                    className="mobile-button"
+                    onClick={() => window.open('https://linkedin.com/in/shahzaibzakori', '_blank')}
+                  >
+                    💼 LinkedIn
+                  </button>
+                  <button 
+                    className="mobile-button"
+                    onClick={() => window.open('mailto:shahzaibzakori@gmail.com', '_blank')}
+                  >
+                    📧 Email
+                  </button>
+                  <button 
+                    className="mobile-button"
+                    onClick={handleRestart}
+                  >
+                    🔄 Restart
+                  </button>
+                </div>
+              </div>
+            </div>
+          ) : (
+            /* Mobile Browser View */
+            <div className="h-full flex flex-col">
+              {/* Mobile Browser Header */}
+              <div className="bg-[#c0c0c0] border-b border-gray-400 p-2 flex items-center gap-2">
+                <button 
+                  className="mobile-nav-button"
+                  onClick={() => { setIsBrowserOpen(false); setActiveSection(Section.HOME); }}
+                >
+                  ←
+                </button>
+                <div className="flex-1 bg-white border border-gray-400 px-2 py-1 text-xs truncate">
+                  engineer-proto.local/{activeSection}.html
+                </div>
+                <button 
+                  className="mobile-nav-button"
+                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                >
+                  ☰
+                </button>
+              </div>
+
+              {/* Mobile Navigation Menu */}
+              {mobileMenuOpen && (
+                <div className="bg-[#c0c0c0] border-b border-gray-400 p-2 overflow-auto max-h-32">
+                  <div className="grid grid-cols-3 gap-1">
+                    <button 
+                      className={`mobile-nav-item text-xs ${activeSection === Section.HOME ? 'active' : ''}`}
+                      onClick={() => { setActiveSection(Section.HOME); setMobileMenuOpen(false); }}
+                    >
+                      🏠 Home
+                    </button>
+                    <button 
+                      className={`mobile-nav-item text-xs ${activeSection === Section.ABOUT ? 'active' : ''}`}
+                      onClick={() => { setActiveSection(Section.ABOUT); setMobileMenuOpen(false); }}
+                    >
+                      👤 About
+                    </button>
+                    <button 
+                      className={`mobile-nav-item text-xs ${activeSection === Section.PROJECTS ? 'active' : ''}`}
+                      onClick={() => { setActiveSection(Section.PROJECTS); setMobileMenuOpen(false); }}
+                    >
+                      🏗️ Projects
+                    </button>
+                    <button 
+                      className={`mobile-nav-item text-xs ${activeSection === Section.LOGS ? 'active' : ''}`}
+                      onClick={() => { setActiveSection(Section.LOGS); setMobileMenuOpen(false); }}
+                    >
+                      📋 Logs
+                    </button>
+                    <button 
+                      className={`mobile-nav-item text-xs ${activeSection === Section.FAILURES ? 'active' : ''}`}
+                      onClick={() => { setActiveSection(Section.FAILURES); setMobileMenuOpen(false); }}
+                    >
+                      ⚠️ Failures
+                    </button>
+                    <button 
+                      className={`mobile-nav-item text-xs ${activeSection === Section.ARCHIVE ? 'active' : ''}`}
+                      onClick={() => { setActiveSection(Section.ARCHIVE); setMobileMenuOpen(false); }}
+                    >
+                      🗑️ Archive
+                    </button>
+                    <button 
+                      className={`mobile-nav-item text-xs ${activeSection === Section.CONTACT ? 'active' : ''}`}
+                      onClick={() => { setActiveSection(Section.CONTACT); setMobileMenuOpen(false); }}
+                    >
+                      📧 Contact
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* Mobile Browser Content */}
+              <div className="flex-1 overflow-auto p-4">
+                {isLoading ? (
+                  <div className="flex flex-col items-center justify-center h-full">
+                    <div className="text-center">
+                      <div className="text-4xl mb-4">🌐</div>
+                      <div className="text-lg font-bold mb-2">Connecting...</div>
+                      <div className="flex space-x-1">
+                        <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce"></div>
+                        <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
+                        <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <>
+                    {activeSection === Section.HOME && <Home onNavigate={navigate} />}
+                    {activeSection === Section.ABOUT && <About />}
+                    {activeSection === Section.PROJECTS && <DeepDive />}
+                    {activeSection === Section.LOGS && <Logs />}
+                    {activeSection === Section.FAILURES && <Failures />}
+                    {activeSection === Section.ARCHIVE && <Archive />}
+                    {activeSection === Section.CONTACT && <Contact />}
+                  </>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Mobile Terminal Overlay */}
+        {isTerminalOpen && (
+          <div className="fixed inset-0 bg-black z-50 flex flex-col">
+            <div className="bg-[#c0c0c0] p-2 flex items-center justify-between border-b border-white">
+              <span className="font-bold text-sm">MS-DOS Prompt</span>
+              <button 
+                className="mobile-nav-button"
+                onClick={() => setIsTerminalOpen(false)}
+              >
+                ✕
+              </button>
+            </div>
+            <div className="flex-1 p-2">
+              <Terminal onNavigate={navigate} onClose={() => setIsTerminalOpen(false)} />
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // Desktop Layout (existing code)
   return (
     <div className="w-screen h-screen relative overflow-hidden flex flex-col select-none bg-[#3a6ea5]">
       {/* Desktop Space */}
@@ -246,17 +503,26 @@ const App: React.FC = () => {
             <div className="menu-bar">
               <span>File</span><span>Edit</span><span>View</span><span>Go</span><span>Bookmarks</span><span>Help</span>
             </div>
-            <div className="flex gap-1 p-1 border-b border-zinc-400 bg-[#c0c0c0]">
-              <button onClick={() => navigate(Section.HOME)} className="win95-button px-4 py-1">
+            <div className="flex gap-1 p-1 border-b border-zinc-400 bg-[#c0c0c0] overflow-auto">
+              <button onClick={() => navigate(Section.HOME)} className="win95-button px-2 py-1 text-xs whitespace-nowrap">
                 🏠 Home
               </button>
-              <button onClick={() => navigate(Section.ABOUT)} className="win95-button px-4 py-1">
+              <button onClick={() => navigate(Section.ABOUT)} className="win95-button px-2 py-1 text-xs whitespace-nowrap">
                 👤 About
               </button>
-              <button onClick={() => navigate(Section.PROJECTS)} className="win95-button px-4 py-1">
+              <button onClick={() => navigate(Section.PROJECTS)} className="win95-button px-2 py-1 text-xs whitespace-nowrap">
                 🏗️ Projects
               </button>
-              <button onClick={() => navigate(Section.CONTACT)} className="win95-button px-4 py-1">
+              <button onClick={() => navigate(Section.LOGS)} className="win95-button px-2 py-1 text-xs whitespace-nowrap">
+                📋 Logs
+              </button>
+              <button onClick={() => navigate(Section.FAILURES)} className="win95-button px-2 py-1 text-xs whitespace-nowrap">
+                ⚠️ Failures
+              </button>
+              <button onClick={() => navigate(Section.ARCHIVE)} className="win95-button px-2 py-1 text-xs whitespace-nowrap">
+                🗑️ Archive
+              </button>
+              <button onClick={() => navigate(Section.CONTACT)} className="win95-button px-2 py-1 text-xs whitespace-nowrap">
                 📧 Contact
               </button>
               <div className="w-px h-6 bg-zinc-500 mx-1"></div>
@@ -330,8 +596,10 @@ const App: React.FC = () => {
           <div className="start-menu-items">
             <div className="start-menu-item" onClick={() => navigate(Section.ABOUT)}>👤 Profile Manifest</div>
             <div className="start-menu-item" onClick={() => navigate(Section.PROJECTS)}>🏗️ Deep Architecture</div>
-            <div className="start-menu-item" onClick={() => navigate(Section.CONTACT)}>📧 Communication Protocols</div>
+            <div className="start-menu-item" onClick={() => navigate(Section.LOGS)}>📋 Activity Logs</div>
             <div className="start-menu-item" onClick={() => navigate(Section.FAILURES)}>⚠️ Anti-Portfolio</div>
+            <div className="start-menu-item" onClick={() => navigate(Section.ARCHIVE)}>🗑️ Archive</div>
+            <div className="start-menu-item" onClick={() => navigate(Section.CONTACT)}>📧 Communication Protocols</div>
             <div className="h-px bg-zinc-400 my-1 mx-2"></div>
             <div className="start-menu-item" onClick={() => { setIsTerminalOpen(true); setIsStartMenuOpen(false); }}>📟 MS-DOS Prompt</div>
             <div className="start-menu-item" onClick={handleRestart}>🚪 Restart...</div>
