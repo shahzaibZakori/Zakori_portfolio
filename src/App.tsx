@@ -37,13 +37,13 @@ const App: React.FC = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const tags = [
-  "Full-Stack Developer",
+  "MERN",
   "Software Engineer",
   "Web Developer",
   "App Developer",
-  "Building Digital Products",
-  "React Native, MERN",
   ".NET",
+  "React Native, MERN",
+  "Building Digital Products",
   "AI-Powered Solutions",
 ];
   useEffect(() => {
