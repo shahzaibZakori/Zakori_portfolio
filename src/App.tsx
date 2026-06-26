@@ -36,7 +36,16 @@ const App: React.FC = () => {
   const [time, setTime] = useState(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
   const [isMobile, setIsMobile] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
+  const tags = [
+  "Full-Stack Developer",
+  "Software Engineer",
+  "Web Developer",
+  "App Developer",
+  "Building Digital Products",
+  "React Native, MERN",
+  ".NET",
+  "AI-Powered Solutions",
+];
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
@@ -154,7 +163,7 @@ const App: React.FC = () => {
             <div className="p-4">
               <div className="text-center mb-6">
                 <h1 className="text-2xl font-bold mb-2">Shahzaib Zakori</h1>
-                <p className="text-sm text-gray-600">Full-Stack Developer</p>
+                <p className="text-sm text-gray-600">Software Engineer</p>
               </div>
 
               {/* Mobile App Grid */}
@@ -455,11 +464,43 @@ const App: React.FC = () => {
         )}
 
         {/* Centered Name */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
-          <div className="text-white text-6xl font-bold italic animate-pulse" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.5)', fontFamily: 'serif' }}>
-            Shahzaib Zakori
-          </div>
-        </div>
+       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
+  <div className="relative w-[500px] h-[500px] flex items-center justify-center">
+
+    {/* Center Name */}
+    <h1
+      className="text-white text-6xl md:text-7xl font-bold italic z-10"
+      style={{
+        fontFamily: "serif",
+        textShadow: "0 0 20px rgba(255,255,255,.3)",
+      }}
+    >
+      Shahzaib Zakori
+    </h1>
+
+    {/* Floating Skills */}
+    {tags.map((tag, i) => {
+      const angle = (360 / tags.length) * i;
+      const radius = 190;
+
+      return (
+        <span
+          key={tag}
+          className="absolute text-white/60 text-sm tracking-widest uppercase animate-pulse"
+          style={{
+            transform: `
+              rotate(${angle}deg)
+              translate(${radius}px)
+              rotate(-${angle}deg)
+            `,
+          }}
+        >
+          {tag}
+        </span>
+      );
+    })}
+  </div>
+</div>
         {isBrowserOpen && !isBrowserMinimized && (
           <div 
             className={`win95-border absolute flex flex-col shadow-lg transition-all ${focusedWindow === 'browser' ? 'z-50' : 'z-10'}`}
