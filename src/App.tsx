@@ -481,7 +481,7 @@ const App: React.FC = () => {
     {/* Floating Skills */}
     {tags.map((tag, i) => {
       const angle = (360 / tags.length) * i;
-      const radius = 190;
+      const radius = 300;
 
       return (
         <span
